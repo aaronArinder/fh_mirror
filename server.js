@@ -1,4 +1,5 @@
 require('./env');
+const db = require('./modules/db');
 
 const express = require('express');
 const path    = require('path');
