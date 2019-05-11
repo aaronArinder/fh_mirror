@@ -19,7 +19,7 @@ docker run -d -p 80:5000 training/webapp:latest python app.py
 DEPLOYING IMAGE
 # log in by getting the ecr login (get-login) for docker
 1) $(aws ecr get-login --no-include-email --region us-east-1)
-2) docker build -t family-hope-dev
+2) docker build -t family-hope-dev .
 3) docker tag family-hope-dev:latest 933911132785.dkr.ecr.us-east-1.amazonaws.com/family-hope-dev:latest
 4) docker push 933911132785.dkr.ecr.us-east-1.amazonaws.com/family-hope-dev:latest
 
