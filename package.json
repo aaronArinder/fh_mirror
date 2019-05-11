@@ -1,10 +1,10 @@
 {
-  "name": "pwa-complete-guide",
-  "version": "1.0.0",
-  "description": "A complete guide to PWAs. Building a simple Instagram clone.",
+  "name": "family-hope-app",
+  "version": "0.0.1",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "http-server -c-1"
+    "start": "node server.js"
   },
   "keywords": [
     "pwa",
@@ -14,10 +14,9 @@
     "complete",
     "tutorial"
   ],
-  "author": "Maximilian Schwarzmüller",
+  "author": "Aaron, David, and Liz Arinder",
   "license": "ISC",
-  "devDependencies": {
-    "http-server": "^0.10.0"
-  },
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
