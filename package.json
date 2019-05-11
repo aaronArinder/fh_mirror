@@ -17,6 +17,7 @@
   "author": "Aaron, David, and Liz Arinder",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "pg": "^7.11.0"
   }
 }
