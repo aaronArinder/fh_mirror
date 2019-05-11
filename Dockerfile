@@ -11,5 +11,5 @@ COPY . /app
 COPY pack*.json ./
 RUN npm ci
 
-EXPOSE 3000
+EXPOSE 8080
 CMD ["npm", "start"]
