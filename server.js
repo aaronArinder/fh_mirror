@@ -1,12 +1,13 @@
-const express = require('express');
-const app     = express();
-const PORT    = 8080;
+require('./env');
+const db = require('./modules/db');
 
+const express = require('express');
 const path    = require('path');
+const app     = express();
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
-app.listen(PORT);
+app.listen(process.env.PORT);
 
