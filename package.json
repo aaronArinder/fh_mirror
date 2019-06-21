@@ -1,23 +1,17 @@
 {
-  "name": "family-hope-app",
+  "name": "family-hope",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
-  "keywords": [
-    "pwa",
-    "progressive",
-    "web",
-    "app",
-    "complete",
-    "tutorial"
-  ],
   "author": "Aaron, David, and Liz Arinder",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "dependencies": {
     "express": "^4.16.4",
-    "pg": "^7.11.0"
+    "pg": "^7.11.0",
+    "nodemon": "^1.19.0"
   }
 }
