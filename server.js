@@ -1,8 +1,9 @@
-const express = require('express');
-const app     = express();
-const PORT    = 8080;
+require('./env');
+const db = require('./modules/db');
 
+const express = require('express');
 const path    = require('path');
+const app     = express();
 
 app.use(express.static('public'));
 
@@ -26,5 +27,5 @@ app.get('/questionnaire', (req, res) => {
 // favicon.ico 404
 //
 
-app.listen(PORT);
+app.listen(process.env.PORT);
 
