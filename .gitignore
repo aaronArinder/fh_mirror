@@ -1,3 +1,5 @@
 *.idea.*
+env.js
+
 node_modules
 *.swp
