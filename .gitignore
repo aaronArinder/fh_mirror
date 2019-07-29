@@ -8,9 +8,15 @@ node_modules
 /tests/e2e/videos/
 /tests/e2e/screenshots/
 
-# local env files
-.env.local
-.env.*.local
+# config env files
+/config/env/
+
+# server
+/server/node_modules
+/server/docker-deploy.txt
+
+# client
+/client/node_modules
 
 # Log files
 npm-debug.log*
