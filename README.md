@@ -1,39 +1,14 @@
-# app
+### Config
+#### Webpack
+#### Env
+### Client
+### Server
+#### `npm start`
+Runs server on port 8080. Must have a `/dist/` with bundled resources.
 
-## Project setup
-```
-npm install
-```
+### Root NPM Scripts
+#### `npm run develop`
+Uses webpack-dev-server to serve on port 8080.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+#### `npm run build-develop`
+Bundles a develop version of the app to be served via Node/Express.
