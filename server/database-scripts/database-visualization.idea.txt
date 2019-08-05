@@ -1,0 +1,18 @@
+:                                                                                                  :
+: +----------+-----+     +-----------+----+      +---------+------+                                :
+: | profiles |     |     | questions |    |      | answers |      |                                :
+: +----------+     |     +-----------+    |      +---------+      |                                :
+: |                |     |                |      |                |                                :
+: | id             |     | id             |      | id             |                                :
+: | given_name     |     | label          |      | body           |                                :
+: | family_name    |     | body           |      | created        |                                :
+: | dob            |     | type           |      | updated        |                                :
+: | sex            |     | created        |      | question_id    |                                :
+: | created        |     | updated        |      |                |                                :
+: | updated        |     |                |      |                |                                :
+: | marital_status |     |                |      |                |                                :
+: |                |     |                |      |                |                                :
+: +----------------+     +----------------+      +----------------+                                :
+:                                                                                                  :
+:                                                                                                  :
+:                                                                                                  :

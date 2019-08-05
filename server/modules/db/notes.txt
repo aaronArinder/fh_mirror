@@ -1,0 +1,11 @@
+To create a postgres db:
+1) install postgres
+2) `create database family_hope`
+3) `create user <name> with encrypted password <password>;`
+4) `grant all privileges on database family_hope to <name>`
+5) find local postgres server: `sudo netstat -plunt | grep postgres`
+6) get a `env.js` file for env variables
+
+
+misc:
+# `drop database family_hope` to remove
