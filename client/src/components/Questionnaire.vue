@@ -6,7 +6,6 @@
     </form>
     <p>First Name: {{firstName}}</p>
     <p>Last Name: {{lastName}}</p>
-    {{howdy}}
     <button @click='sendStuff()'>click?</button>
   </div>
 </template>
