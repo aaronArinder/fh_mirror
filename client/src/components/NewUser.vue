@@ -80,7 +80,7 @@ import {
 } from 'vuelidate/lib/validators'
 
 export default {
-  name: 'NewUser',
+  name: 'newUser',
   mixins: [validationMixin],
   data: () => ({
     form: {

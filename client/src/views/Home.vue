@@ -1,17 +1,14 @@
 <template>
   <div class="home">
-    <NewUser />
+    Details about Family Hope, navigation, and so on.
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import NewUser from '@/components/NewUser.vue'
 
 export default {
   name: 'home',
   components: {
-    NewUser
   }
 }
 </script>

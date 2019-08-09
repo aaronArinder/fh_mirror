@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import NewUser from './components/NewUser.vue'
+import Questionnaire from './components/Questionnaire.vue'
 
 Vue.use(Router)
 
@@ -11,6 +13,16 @@ export default new Router({
       name: 'home',
       component: Home
     },
+    {
+      path: '/new_user',
+      name: 'newUser',
+      component: NewUser
+    },
+    {
+      path: '/questionnaire',
+      name: 'questionnaire',
+      component: Questionnaire
+    }
     //{
     //  path: '/about',
     //  name: 'about',
