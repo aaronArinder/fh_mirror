@@ -6,6 +6,20 @@ const path         = require('path');
 const serveStatic  = require('serve-static');
 const app          = express();
 
+
+// uses body-parser underneath the hood
+// these are the default options; leaving here
+// as a reminder to follow up on them
+app.use(express.json({
+  inflate: true,
+  limit: '100kb',
+  reviver: null,
+  strict: true,
+  type: 'application/json',
+  verify: undefined
+}))
+
+require(__dirname + '/authorization/login')(app);
 //app.use(express.static(__dirname + '../dist'));
 app.use('/', serveStatic(__dirname + '../dist'));
 
