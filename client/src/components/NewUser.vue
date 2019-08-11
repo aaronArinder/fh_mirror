@@ -79,6 +79,8 @@ import {
   maxLength,
 } from 'vuelidate/lib/validators'
 
+import mockQuestions from '../mock-data/new-user'
+
 export default {
   name: 'NewUser',
   mixins: [validationMixin],
@@ -170,10 +172,6 @@ export default {
   //}
 }
 </script>
-
-
-
-
 
 <style scoped lang="scss">
 
