@@ -5,6 +5,7 @@ import store from '@/store'
 import '@/registerServiceWorker'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
+import '@/scss/main.scss'
 // themes!
 //import 'vue-material/dist/theme/black-green-light.css'
 
