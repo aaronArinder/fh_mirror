@@ -2,6 +2,27 @@
   <div>
     <form novalidate class="md-layout" @submit.prevent="validateUser">
       <md-card class="md-layout-item md-size-50 md-small-size-100">
+        <div class="md-title">New User</div>
+        <md-card-content>
+          <div class="md-layout-item" v-for="(question, index) in mockQuestions" :key="`question${index}`">
+            <md-field>
+              <label :for="question.question" v-html="question.question"></label>
+              <md-input v-if="question.type !== 'select'" :type="question.type" :name="question.question" :id="question.question_id" autocomplete="given-name" :disabled="sending" />
+              <md-select v-if="question.type == 'select'" md-dense :disabled="sending">
+                <md-option v-for="(option, index) in question.options" :key="`option${index}`">
+                  {{option}}
+                </md-option>
+
+              </md-select>
+              <!-- <span class="md-error" v-if="!$v.form.firstName.required">The first name is required</span>
+              <span class="md-error" v-else-if="!$v.form.firstName.minlength">Invalid first name</span> -->
+            </md-field>
+          </div>
+        </md-card-content>
+      </md-card>
+    </form>
+    <!-- <form novalidate class="md-layout" @submit.prevent="validateUser">
+      <md-card class="md-layout-item md-size-50 md-small-size-100">
         <md-card-header>
           <div class="md-title">New User</div>
         </md-card-header>
@@ -57,20 +78,19 @@
             <span class="md-error" v-else-if="!$v.form.email.email">Invalid email</span>
           </md-field>
         </md-card-content>
-
-        <md-progress-bar md-mode="indeterminate" v-if="sending" />
-
-        <md-card-actions>
-          <md-button type="submit" class="md-primary" :disabled="sending">Create user</md-button>
-        </md-card-actions>
       </md-card>
 
-      <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
-    </form>
+    </form> -->
+    <md-progress-bar md-mode="indeterminate" v-if="sending" />
+    <md-card-actions>
+      <md-button type="submit" class="md-primary" :disabled="sending">Create user</md-button>
+    </md-card-actions>
+    <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
   </div>
 </template>
 
 <script>
+import mockQuestions from '../mock-data/new-user'
 import { validationMixin } from 'vuelidate'
 import {
   required,
@@ -78,8 +98,6 @@ import {
   minLength,
   maxLength,
 } from 'vuelidate/lib/validators'
-
-import mockQuestions from '../mock-data/new-user'
 
 export default {
   name: 'NewUser',
@@ -95,6 +113,7 @@ export default {
     userSaved: false,
     sending: false,
     lastUser: null,
+    mockQuestions: mockQuestions
   }),
   validations: {
     form: {
@@ -119,13 +138,7 @@ export default {
       }
     }
   },
-  //props: {
-  //  msg: String,
-  //},
   methods: {
-    //sendStuff() {
-    //  this.$store.dispatch('updateHowdy', 'purple');
-    //}
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName];
       if (field) return { 'md-invalid':  field.$invalid && field.$dirty };
@@ -158,48 +171,6 @@ export default {
       }
     }
   },
-  //computed: {
-  //  howdy() {
-  //    return this.$store.state.howdy;
-  //  }
-  //},
-
-  //data() {
-  //  return {
-  //    firstName: '',
-  //    lastName: '',
-  //  }
-  //}
 }
 </script>
-
-<style scoped lang="scss">
-
-  .md-progress-bar {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-  }
-
-questions {
-  text-align: center;
-  display: inline;
-}
-
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
 

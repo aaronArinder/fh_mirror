@@ -1,4 +1,4 @@
-module.exports = JSON.stringify(
+module.exports =
   [
     {
       question_id: 1,
@@ -16,13 +16,13 @@ module.exports = JSON.stringify(
       question_id: 3,
       question: 'Email address',
       required: true,
-      type: 'text',
+      type: 'email',
     },
     {
       question_id: 4,
       question: 'Phone number',
       required: true,
-      type: 'phone number',
+      type: 'tel',
     },
     {
       question_id: 5,
@@ -51,4 +51,4 @@ module.exports = JSON.stringify(
       type: 'text',
     },
   ]
-);
+
