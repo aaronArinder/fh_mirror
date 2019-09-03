@@ -40,21 +40,36 @@ const webpackConfig = {
         ]
       },
       {
-        test: /\.scss$/,
+        test: /\.s(c|a)ss$/,
         use: [
-          isDev ? 'vue-style-loader' : MiniCSSExtractPlugin.loader,
-          { loader: 'css-loader', options: { sourceMap: isDev } },
-          { loader: 'sass-loader', options: { sourceMap: isDev } }
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require('sass'),
+              fiber: require('fibers'),
+            }
+          }
         ]
       },
-      {
-        test: /\.sass$/,
-        use: [
-          isDev ? 'vue-style-loader' : MiniCSSExtractPlugin.loader,
-          { loader: 'css-loader', options: { sourceMap: isDev } },
-          { loader: 'sass-loader', options: { sourceMap: isDev } }
-        ]
-      }
+
+      // {
+      //   test: /\.scss$/,
+      //   use: [
+      //     isDev ? 'vue-style-loader' : MiniCSSExtractPlugin.loader,
+      //     { loader: 'css-loader', options: { sourceMap: isDev } },
+      //     { loader: 'sass-loader', options: { sourceMap: isDev } }
+      //   ]
+      // },
+      // {
+      //   test: /\.sass$/,
+      //   use: [
+      //     isDev ? 'vue-style-loader' : MiniCSSExtractPlugin.loader,
+      //     { loader: 'css-loader', options: { sourceMap: isDev } },
+      //     { loader: 'sass-loader', options: { sourceMap: isDev } }
+      //   ]
+      // }
     ]
   },
   plugins: [
@@ -62,8 +77,9 @@ const webpackConfig = {
     new HtmlPlugin({ template: 'index.html', chunksSortMode: 'dependency' }),
     new MiniCSSExtractPlugin({
       filename: `styles/[name].css`
-    })
+    }),
   ]
 };
 
 module.exports = webpackConfig;
+

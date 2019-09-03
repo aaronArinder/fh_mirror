@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "develop": "cross-env NODE_ENV=development webpack-dev-server --progress",
     "build-develop": "cross-env NODE_NV=development webpack",
-    "build-production": "cross-env NODE_NV=production webpack"
+    "build-production": "cross-env NODE_NV=production webpack",
+    "develop": "cross-env NODE_ENV=development webpack-dev-server --progress"
   },
   "dependencies": {
     "@babel/core": "~7.2",
@@ -29,18 +29,24 @@
     "mini-css-extract-plugin": "~0.5",
     "node-sass": "~4.11",
     "optimize-css-assets-webpack-plugin": "~3.2",
-    "sass-loader": "~7.1",
     "uglifyjs-webpack-plugin": "~1.2",
     "vue": "^2.6.10",
     "vue-loader": "^15.7.1",
-    "vue-material": "^1.0.0-beta-11",
     "vue-style-loader": "~4.1",
     "vue-template-compiler": "^2.6.10",
+    "vuetify": "1.5.7",
     "webpack": "^4.29.6",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.7.2",
     "webpack-hot-middleware": "~2.24",
     "webpack-merge": "~4.2"
+  },
+  "devDependencies": {
+    "@mdi/font": "^4.2.95",
+    "deepmerge": "^4.0.0",
+    "fibers": "^4.0.1",
+    "sass": "^1.22.10",
+    "sass-loader": "^7.1.0"
   }
 }
