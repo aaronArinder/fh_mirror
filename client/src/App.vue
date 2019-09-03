@@ -1,10 +1,12 @@
 <template>
-  <div id='app'>
+  <div id="app">
     <v-app>
       <div id="nav">
         <router-link to="/">Home</router-link> |
         <router-link to="/about">About</router-link>
-        <v-btn>Button</v-btn>
+        <div>
+          <v-btn>Button</v-btn>
+        </div>
       </div>
       <router-view/>
     </v-app>
@@ -19,6 +21,7 @@
   text-align: center;
   color: #2c3e50;
 }
+
 #nav {
   padding: 30px;
   a {
