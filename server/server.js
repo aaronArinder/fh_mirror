@@ -1,13 +1,14 @@
+'use strict';
+
 require('../config/env/common.env'); // env vars
 
-'use strict';
-const bcrypt = require('bcrypt');
-const db = require('./modules/db');
+const bcrypt       = require('bcrypt');
+const { _query }   = require('./modules/db');
 const express      = require('express');
 const cookieParser = require('cookie-parser');
-const passport = require('passport');
+const passport     = require('passport');
 const path         = require('path');
-const jwt = require('jsonwebtoken');
+const jwt          = require('jsonwebtoken');
 const serveStatic  = require('serve-static');
 
 //const fs = require('fs');
@@ -23,17 +24,18 @@ const { secret } = process.env.secret; // ooo la la
 
 // used with req.body
 passport.use(new LocalStrategy(
-async (username, password, done) => {
-  try {
-    const { password_hash } = await getPassword(username);
-    const match = await bcrypt.compare(password, password_hash);
-    if (match) return done(null, 'hooray!');
-    else return done('Incorrect username and password combination');
-  } catch (e) {
-    console.log('err from middleware auth', e);
-    return done(e);
-  }
-}));
+  async (username, password, done) => {
+    try {
+      const { password_hash } = await getPassword(username);
+      const match = await bcrypt.compare(password, password_hash);
+      if (match) return done(null, 'hooray!');
+      else return done('Incorrect username and password combination');
+    } catch (e) {
+      console.log('err from middleware auth', e);
+      return done(e);
+    }
+  })
+);
 
 // used with cookies
 passport.use(new JWTStrategy({
@@ -52,21 +54,41 @@ passport.use(new JWTStrategy({
   if (Date.now() > jwt.expires) return done('jwt expired');
   else return done(null, jwt);
 }
-
 ))
 
 const router = express.Router();
 
 router.post('/register', async (req, res, next) => {
-  const { username, password } = req.body;
+  const {
+    first_name,
+    last_name,
+    dob,
+    sex,
+    username,
+    password
+  } = req.body;
   // approx 13 seconds
   const hashCost = 10;
 
   try {
     const passwordHash = await bcrypt.hash(password, hashCost);
+    const insertUser = `
+      insert into users (first_name, last_name, dob, sex, username, password_hash)
+      values ($1, $2, $3, $4, $5, $6)
+    `;
+    await _query(insertUser, [
+      first_name,
+      last_name,
+      dob,
+      sex,
+      username,
+      passwordHash
+    ]);
+
     return res.sendStatus(200);
   } catch (e) {
     console.log('error from router', e);
+    // TODO: better error handling
     return res.sendStatus(400);
   }
 });
@@ -76,14 +98,14 @@ router.post('/login', (req, res) => {
     'local',
     { session: false },
     (err, user) => {
-      if (err || !user) return res.sendStauts(400);
+      if (err || !user) return res.sendStatus(400);
       const payload = {
-        // bad
-        username: 'aaron',
-        // do this
+        username: req.body.username,
         expires: Date.now() + parseInt(process.env.JWT_EXPIRATION_MS),
       };
+
       return req.login(payload, { session: false }, (err) => {
+        // TODO: better error handling
         if (err) return res.sendStatus(400);
         const token = jwt.sign(JSON.stringify(payload), process.env.secret);
         res.cookie('jwt', token, { httpOnly: true, secure: true });
@@ -99,8 +121,8 @@ router.get('/test-auth', passport.authenticate('jwt', { session: false }), (req,
   return res.sendStatus(200);
 })
 
-// use https server
-const app          = express();
+// TODO: check whether I'm using https
+const app = express();
 
 
 // uses body-parser underneath the hood
@@ -113,7 +135,7 @@ app.use(express.json({
   strict: true,
   type: 'application/json',
   verify: undefined
-}))
+}));
 
 app.use(cookieParser());
 
