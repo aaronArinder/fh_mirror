@@ -50,9 +50,10 @@
     "webpack-merge": "~4.2"
   },
   "devDependencies": {
-    "sass": "^1.22.12",
+    "@mdi/font": "^4.4.95",
     "deepmerge": "^4.0.0",
     "fibers": "^4.0.1",
+    "sass": "^1.22.12",
     "sass-loader": "^7.1.0"
   }
 }

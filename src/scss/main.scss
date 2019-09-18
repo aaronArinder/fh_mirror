@@ -9,13 +9,17 @@
 'settings/fonts';
 
 
-///*
+///***
 // * Atoms
-// *
+// ***
 @import
 'atoms/cta-button'
 ;
 
+
+///***
+// * Molecules
+// ***
 @import
 'molecules/questionnaire-module',
 'molecules/new-user';
