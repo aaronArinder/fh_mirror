@@ -1,6 +1,23 @@
 <template>
   <div>
-    <form novalidate class="md-layout" @submit.prevent="validateUser">
+    <v-form>
+      <div v-for="(question, index) in mockQuestions" :key="`question${index}`">
+        <v-text-field
+          :label="question.question"
+          required
+           v-if="question.type !== 'select'" :type="question.type" :name="question.question" :id="question.question_id" autocomplete="given-name" :disabled="sending"
+          >
+        </v-text-field>
+        <v-select
+         v-if="question.type == 'select'"
+        :items="question.options"
+        :label="question.question"
+        :disabled="sending"
+        :id="question.question_id"
+        ></v-select>
+      </div>
+    </v-form>
+    <!-- <form novalidate class="md-layout" @submit.prevent="validateUser">
       <md-card class="md-layout-item md-size-50 md-small-size-100">
         <md-card-header>
           <div class="md-title">New User</div>
@@ -66,12 +83,13 @@
       </md-card>
 
       <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
-    </form>
+    </form> -->
   </div>
 </template>
 
 <script>
 import { validationMixin } from 'vuelidate'
+import mockQuestions from '../mock-data/new-user'
 import {
   required,
   email,
@@ -93,6 +111,7 @@ export default {
     userSaved: false,
     sending: false,
     lastUser: null,
+    mockQuestions: mockQuestions
   }),
   validations: {
     form: {
@@ -117,9 +136,6 @@ export default {
       }
     }
   },
-  //props: {
-  //  msg: String,
-  //},
   methods: {
     //sendStuff() {
     //  this.$store.dispatch('updateHowdy', 'purple');
@@ -156,52 +172,13 @@ export default {
       }
     }
   },
+  mounted(){
+    console.log(this.mockQuestions)
+  }
   //computed: {
   //  howdy() {
   //    return this.$store.state.howdy;
   //  }
   //},
-
-  //data() {
-  //  return {
-  //    firstName: '',
-  //    lastName: '',
-  //  }
-  //}
 }
 </script>
-
-
-
-
-
-<style scoped lang="scss">
-
-  .md-progress-bar {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-  }
-
-questions {
-  text-align: center;
-  display: inline;
-}
-
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
-
