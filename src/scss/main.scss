@@ -8,6 +8,17 @@
 'settings/colors',
 'settings/fonts';
 
+@import
+// Functions
+'utilities/functions/stripUnits',
+'utilities/functions/pxToEm',
+// Mixins
+'utilities/mixins/media-queries'
+;
+
+@import
+'quarks/body'
+;
 
 ///***
 // * Atoms
