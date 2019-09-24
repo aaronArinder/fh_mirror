@@ -2,7 +2,6 @@
   <v-container class="questionnaire-module">
     <div class="questionnaire-module__content">
       <h1 v-html="mockQuestions.title" class="questionnaire-module__title font-weight-light"></h1>
-      {{$vuetify.breakpoint.name}}
       <v-form class="questionnaire-module__form">
         <div v-for="(question, index) in mockQuestions.questions" :key="`question${index}`">
           <v-text-field
