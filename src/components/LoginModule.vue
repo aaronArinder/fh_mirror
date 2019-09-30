@@ -14,12 +14,6 @@
           class="login-module__toolbar"
         >
           <v-toolbar-title>Login</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-            </template>
-            <span>Source</span>
-          </v-tooltip>
         </v-toolbar>
         <v-card-text>
           <v-form>
@@ -35,7 +29,10 @@
               label="Password"
               name="password"
               prepend-icon="lock"
-              type="password"
+              :type="visible ? 'text' : 'password'"
+              :append-icon="visible ? 'visibility_off' : 'visibility'"
+               @click:append="() => (visible = !visible)"
+
             ></v-text-field>
           </v-form>
         </v-card-text>
@@ -50,3 +47,11 @@
     </v-flex>
   </v-layout>
 </template>
+
+<script>
+export default {
+    data: () => ({
+      visible: false
+    })
+}
+</script>
