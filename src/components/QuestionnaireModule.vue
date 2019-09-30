@@ -23,7 +23,7 @@
           ></v-select>
         </div>
         <div class="questionnaire-module__btn-container">
-          <v-btn large color="primary" type="submit" :disabled="sending">Submit</v-btn>
+          <v-btn class="cta-button cta-button--primary" large type="submit" block tile :disabled="sending">Submit</v-btn>
         </div>
       </v-form>
     </div>

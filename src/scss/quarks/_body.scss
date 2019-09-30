@@ -7,4 +7,11 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	box-sizing: border-box;
+	.main-content {
+		background: linear-gradient(
+			135deg,
+			rgba(#242e4d, .9),
+			rgba(#897e79, .9)
+		);
+	}
 }

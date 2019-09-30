@@ -2,20 +2,22 @@
   <div id="app">
     <v-app>
       <div>
-        <v-toolbar>
-          <v-toolbar-title>Family Hope</v-toolbar-title>
+        <v-toolbar color="#35c3c1">
+          <v-toolbar-title class="white--text">Family Hope</v-toolbar-title>
           <div class="flex-grow-1"></div>
           <v-toolbar-items>
-            <v-btn to="/" text>Home</v-btn>
-            <v-btn to="/about" text>About</v-btn>
+            <v-btn class="white--text" to="/" text>Home</v-btn>
+            <v-btn class="white--text" to="/about" text>About</v-btn>
+            <v-btn class="white--text" to="/login" text>Login</v-btn>
           </v-toolbar-items>
         </v-toolbar>
       </div>
-      <v-content>
+      <v-content class="main-content">
           <v-row
             align="center"
             justify="center"
             dense
+            class="fill-height"
             >
             <v-col>
               <router-view/>

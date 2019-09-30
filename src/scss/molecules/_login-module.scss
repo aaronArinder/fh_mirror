@@ -1,0 +1,42 @@
+.login-module {
+  .theme--light.v-card {
+    background-color: initial;
+  }
+  .theme--dark.v-sheet {
+    background-color: rgba(#424242, .5);
+  }
+  &__card {
+    background: rgba(0, 0, 0, 0.15);
+    .v-card__text {
+      padding-bottom: .5rem;
+    }
+    .v-input__prepend-outer {
+      margin: 0;
+      background: #f5f6f8;
+      padding: .75rem;
+      .v-icon {
+        color: #B1B7C4;
+      }
+    }
+    .v-input__slot {
+      background-color: white;
+      padding: .5rem;
+      margin-bottom: 0;
+      label {
+        padding-left: .5rem;
+      }
+    }
+    .v-card__actions {
+      padding-bottom: 1rem;
+      display: flex;
+      justify-content: space-around;
+      .cta-button--tertiary {
+        padding-left: 0;
+      }
+      .v-btn.v-btn + .v-btn {
+        background-color: rgba(#424242, .5);
+      }
+    }
+  }
+
+}

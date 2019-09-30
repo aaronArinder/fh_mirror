@@ -1,0 +1,20 @@
+.cta-button {
+  &--primary {
+    background: linear-gradient(to right, #35c3c1, #00d6b7);
+    color: white;
+    span {
+      color: white;
+    }
+  }
+  &--secondary {
+    background-color: #424242;
+    span {
+      color: white;
+    }
+  }
+  &--tertiary {
+    span {
+      color: #00d6b7;
+    }
+  }
+}
