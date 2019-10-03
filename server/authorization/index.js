@@ -1,6 +1,5 @@
 'use strict';
 
-const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -19,7 +18,7 @@ passport.use(new LocalStrategy({
   try {
     const password_hash = await getPassword(username);
     const match = await bcrypt.compare(password, password_hash);
-    if (match) return done(nuull, 'hooray!');
+    if (match) return done(null, 'hooray!');
     else return done('Incorrect username and password combination');
   } catch (e) {
     console.log('err from middleware auth', e);
@@ -38,5 +37,3 @@ password.use(new JWTStrategy({
 
 ))
 
-
-//const privateKey = fs.readFileSync('./private.key')

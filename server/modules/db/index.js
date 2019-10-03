@@ -1,12 +1,8 @@
-const { Pool, Client } = require('pg');
+const { Pool } = require('pg');
 const pool = new Pool();
 
-//pool.query('select now()', (err, res) => {
-//  pool.end();
-//});
 
 module.exports = {
-  // connect?
   _query: async (text, values) => {
     const client = await pool.connect();
     try {

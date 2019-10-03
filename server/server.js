@@ -1,133 +1,40 @@
 'use strict';
 
+/**
+ * This file requires a common.env with the right key/value pairs to run properly. See the
+ * README for more details (or talk to me over slack/discord)
+ *
+ * @requires common.env
+ */
+
 require('../config/env/common.env'); // env vars
 
-const bcrypt       = require('bcrypt');
-const { _query }   = require('./modules/db');
-const express      = require('express');
 const cookieParser = require('cookie-parser');
-const passport     = require('passport');
+const express      = require('express');
 const path         = require('path');
-const jwt          = require('jsonwebtoken');
 const serveStatic  = require('serve-static');
 
-//const fs = require('fs');
-//const jwt = require('jsonwebtoken');
-//const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const passportJWT = require('passport-jwt');
-const JWTStrategy = passportJWT.Strategy;
-//const bcrypt = require('bcrypt');
-const { getPassword } = require('./ORM/users');
+const { authorizationHook } = require('./middleware/authorization');
 
-const { secret } = process.env.secret; // ooo la la
-
-// used with req.body
-passport.use(new LocalStrategy(
-  async (username, password, done) => {
-    try {
-      const { password_hash } = await getPassword(username);
-      const match = await bcrypt.compare(password, password_hash);
-      if (match) return done(null, 'hooray!');
-      else return done('Incorrect username and password combination');
-    } catch (e) {
-      console.log('err from middleware auth', e);
-      return done(e);
-    }
-  })
-);
-
-// used with cookies
-passport.use(new JWTStrategy({
-  jwtFromRequest: req => {
-    let jwt;
-    if (req.headers.authorization) {
-      jwt = req.headers.authorization.split(' ')[1];
-    } else if (req.cookies.jwt) {
-      jwt = req.cookies.jwt;
-    }
-    return jwt;
-  },
-  secretOrKey: process.env.secret,
-}, (jwt, done) => {
-  console.log('jwt.expires', jwt.expires)
-  if (Date.now() > jwt.expires) return done('jwt expired');
-  else return done(null, jwt);
-}
-))
-
-const router = express.Router();
-
-router.post('/register', async (req, res, next) => {
-  const {
-    first_name,
-    last_name,
-    dob,
-    sex,
-    username,
-    password
-  } = req.body;
-  // approx 13 seconds
-  const hashCost = 10;
-
-  try {
-    const passwordHash = await bcrypt.hash(password, hashCost);
-    const insertUser = `
-      insert into users (first_name, last_name, dob, sex, username, password_hash)
-      values ($1, $2, $3, $4, $5, $6)
-    `;
-    await _query(insertUser, [
-      first_name,
-      last_name,
-      dob,
-      sex,
-      username,
-      passwordHash
-    ]);
-
-    return res.sendStatus(200);
-  } catch (e) {
-    console.log('error from router', e);
-    // TODO: better error handling
-    return res.sendStatus(400);
-  }
-});
-
-router.post('/login', (req, res) => {
-  passport.authenticate(
-    'local',
-    { session: false },
-    (err, user) => {
-      if (err || !user) return res.sendStatus(400);
-      const payload = {
-        username: req.body.username,
-        expires: Date.now() + parseInt(process.env.JWT_EXPIRATION_MS),
-      };
-
-      return req.login(payload, { session: false }, (err) => {
-        // TODO: better error handling
-        if (err) return res.sendStatus(400);
-        const token = jwt.sign(JSON.stringify(payload), process.env.secret);
-        res.cookie('jwt', token, { httpOnly: true, secure: true });
-        return res.sendStatus(200);
-      })
-    },
-  )(req, res);
-});
-
-router.get('/test-auth', passport.authenticate('jwt', { session: false }), (req, res) => {
-  // might not be on user? no idea
-  console.log('req.user', req.user);
-  return res.sendStatus(200);
-})
-
-// TODO: check whether I'm using https
 const app = express();
 
 
-// uses body-parser underneath the hood
-// these are the default options; leaving here
-// as a reminder to follow up on them
+/**
+ * Set up body parsing via express.json, which uses `body-parser` underneath the hood. Currently,
+ * the config options are the defaults. I'm leaving them here as a reminder of what we can do with
+ * express.json().
+ *
+ * @property {Boolean} inflate Enables or disables handling compressed bodies; when disabled,
+ *   deflated bodies are rejected.
+ * @property {String} limit Controls the maximum request body size.
+ * @property {Object->null} reviver This is the reviver--the second arg to JSON.parse(), which
+ * can be a function for transforming the value to parse. Currently set to null
+ * @property {Boolean} strict Enables or disables only accepting arrays and objects; when false,
+ *   it will accept anything JSON.parse() accepts.
+ * @property {String} type What media type to JSON.parse().
+ * @property {Undefined} verify Currently set to `undefined`, but can be a function for
+ *   verifying what's to be parsed. See the docs for call signature.
+ */
 app.use(express.json({
   inflate: true,
   limit: '100kb',
@@ -137,19 +44,40 @@ app.use(express.json({
   verify: undefined
 }));
 
+/**
+ * cookie-parser parses the cookie header and populates req.cookies. This can have a secret
+ * passed to it for supporting signed cookies.
+ *
+ * @function
+ * @name cookieParser
+ */
+
 app.use(cookieParser());
 
-//require(__dirname + '/authorization/login')(app);
-//app.use(express.static(__dirname + '../dist'));
-app.use('/', serveStatic(__dirname + '../dist'));
+//app.use('/', serveStatic(__dirname + '../dist'));
 
-//app.use(serveStatic('public/ftp', { 'index': ['default.html', 'default.htm'] }))
-app.use(serveStatic('../dist', { 'index': ['index.html'] }))
+/**
+ * serve-static statically serves files.
+ *
+ * @function
+ * @name serveStatic
+ * @arg {String} The location of the directory to serve from
+ * @arg {Object} An options object with one key, index, whose value is the default value for
+ *   that key: the index file of the served directory.
+ */
 
-//app.get('/', (req, res) => {
-//  return res.sendFile(path.join(__dirname + '/../dist/index.html'));
-//});
+app.use(serveStatic('../dist', { index: 'index.html' }))
 
-app.use(router);
+/**
+ * The authorizationHook() fn hooks our registration, login, and authentication logic into the
+ * app.
+ *
+ * @typedef Invocation
+ * @name authorizationHook
+ * @arg app {Object} The express instance
+ */
+authorizationHook(app);
+
+/* let 'er rip, grill */
 app.listen(process.env.PORT);
 

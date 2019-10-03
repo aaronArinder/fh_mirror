@@ -1,7 +1,7 @@
 
 -- begin transaction; you must enter "commit;" to accept the changes
 -- below or "abort;" to end the transaction (especially important if the
--- commands below fail
+-- commands below fail. Let me know if you have any questions
 
 begin;
 
