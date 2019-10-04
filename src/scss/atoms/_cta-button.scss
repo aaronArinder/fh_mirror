@@ -1,21 +1,21 @@
 .cta-button {
   &--primary {
-    background: linear-gradient(to right, #35c3c1, #00d6b7);
-    color: white;
+    background: $teal-gradient;
+    color: $white;
     span {
-      color: white;
+      color: $white;
     }
   }
   &--secondary {
-    background-color: #424242;
+    background-color: $primary-grey;
     span {
-      color: white;
+      color: $white;
     }
   }
   &--tertiary {
     span {
       text-decoration: underline;
-      color: #00d6b7;
+      color: $primary-teal;
     }
   }
 }

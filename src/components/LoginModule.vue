@@ -8,7 +8,6 @@
       md4>
       <v-card class="login-module__card elevation-12" tile>
         <v-toolbar
-          color="primary"
           dark
           flat
           class="login-module__toolbar"
@@ -35,14 +34,14 @@
 
             ></v-text-field>
           </v-form>
+          <v-card-actions>
+            <v-btn class="cta-button cta-button--primary" type="submit" large block tile>Login</v-btn>
+          </v-card-actions>
+          <v-card-actions>
+            <v-btn class="cta-button cta-button--tertiary" text small >Forgot Password?</v-btn>
+            <v-btn tile class="cta-button cta-button--secondary" to="/register">Sign Up</v-btn>
+          </v-card-actions>
         </v-card-text>
-        <v-card-actions>
-          <v-btn class="cta-button cta-button--primary" large block tile>Login</v-btn>
-        </v-card-actions>
-        <v-card-actions>
-          <v-btn class="cta-button cta-button--tertiary" text small >Forgot Password?</v-btn>
-          <v-btn tile class="cta-button cta-button--secondary">Sign Up</v-btn>
-        </v-card-actions>
       </v-card>
     </v-flex>
   </v-layout>

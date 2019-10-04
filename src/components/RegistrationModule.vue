@@ -1,8 +1,20 @@
 <template>
-  <v-container class="questionnaire-module">
-    <div class="questionnaire-module__content">
-      <h1 v-html="mockQuestions.title" class="questionnaire-module__title display-1 font-weight-light"></h1>
-      <v-form class="questionnaire-module__form">
+  <v-container class="registration-module">
+    <v-layout
+            align-center
+            justify-center>
+      <v-flex
+        xs12
+        sm8
+        md7 >
+        <v-card class="elevation-12" tile>
+          <v-toolbar
+            flat
+          >
+            <v-toolbar-title>Sign Up</v-toolbar-title>
+          </v-toolbar>
+          <v-card-text>
+           <v-form class="registration-module__form">
         <div v-for="(question, index) in mockQuestions.questions" :key="`question${index}`">
           <v-text-field
             :label="question.question"
@@ -16,16 +28,48 @@
           :label="question.question"
           :disabled="sending"
           :id="question.question_id"
+          required
           ></v-select>
         </div>
+              <v-card-actions>
+            <v-btn class="cta-button cta-button--primary" type="submit" large block tile>Register</v-btn>
+          </v-card-actions>
       </v-form>
-    </div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+
+    <!-- <div class="registration-module__content">
+      <h1 v-html="mockQuestions.title" class="registration-module__title display-1 font-weight-light"></h1>
+      <v-form class="registration-module__form">
+        <div v-for="(question, index) in mockQuestions.questions" :key="`question${index}`">
+          <v-text-field
+            :label="question.question"
+            required
+            v-if="question.type !== 'select'" :type="question.type" :name="question.question" :id="question.question_id" autocomplete="given-name" :disabled="sending"
+            >
+          </v-text-field>
+          <v-select
+          v-if="question.type == 'select'"
+          :items="question.options"
+          :label="question.question"
+          :disabled="sending"
+          :id="question.question_id"
+          required
+          ></v-select>
+        </div>
+        <div class="registration-module__btn-container">
+          <v-btn class="cta-button cta-button--primary" large type="submit" block tile :disabled="sending">Register</v-btn>
+        </div>
+      </v-form>
+    </div> -->
   </v-container>
 </template>
 
 <script>
 import { validationMixin } from 'vuelidate'
-import mockQuestions from '../mock-data/new-user'
+import mockQuestions from '../mock-data/registration'
 import {
   required,
   email,
@@ -34,7 +78,7 @@ import {
 } from 'vuelidate/lib/validators'
 
 export default {
-  name: 'NewUser',
+  name: 'RegistrationModule',
   mixins: [validationMixin],
   data: () => ({
     form: {

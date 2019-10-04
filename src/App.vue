@@ -12,7 +12,7 @@
           </v-toolbar-items>
         </v-toolbar>
       </div>
-      <v-content class="main-content">
+      <v-content>
           <v-row
             align="center"
             justify="center"
