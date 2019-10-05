@@ -5,55 +5,36 @@
       <v-form class="questionnaire-module__form">
         <div v-for="(question, index) in mockQuestions.questions" :key="`question${index}`">
           <v-text-field
-            :label="question.question"
             required
+            :label="question.question"
             v-if="question.type !== 'select'"
             :type="question.type"
             :name="question.question"
             :id="question.question_id"
             :disabled="sending"
-            >
+          >
           </v-text-field>
           <v-select
-          v-if="question.type == 'select'"
-          :items="question.options"
-          :label="question.question"
-          :disabled="sending"
-          :id="question.question_id"
+            v-if="question.type == 'select'"
+            :items="question.options"
+            :label="question.question"
+            :disabled="sending"
+            :id="question.question_id"
           ></v-select>
         </div>
         <div class="questionnaire-module__btn-container">
-          <v-btn class="cta-button cta-button--primary" large type="submit" block tile :disabled="sending">Submit</v-btn>
+          <v-btn
+            large
+            block
+            tile
+            class="cta-button cta-button--primary"
+            type="submit"
+            :disabled="sending"
+          >Submit</v-btn>
         </div>
       </v-form>
     </div>
   </v-container>
-    <!-- <form novalidate class="md-layout" @submit.prevent="validateUser">
-      <md-card class="md-layout-item md-size-50 md-small-size-100">
-        <md-card-header>
-          <div class="md-title">New User</div>
-        </md-card-header>
-
-        <md-card-content>
-
-
-          <md-field :class="getValidationClass('email')">
-            <label for="email">Email</label>
-            <md-input type="email" name="email" id="email" autocomplete="email" v-model="form.email" :disabled="sending" />
-            <span class="md-error" v-if="!$v.form.email.required">The email is required</span>
-            <span class="md-error" v-else-if="!$v.form.email.email">Invalid email</span>
-          </md-field>
-        </md-card-content>
-
-        <md-progress-bar md-mode="indeterminate" v-if="sending" />
-
-        <md-card-actions>
-          <md-button type="submit" class="md-primary" :disabled="sending">Create user</md-button>
-        </md-card-actions>
-      </md-card>
-
-      <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
-    </form> -->
 </template>
 
 <script>
@@ -106,9 +87,6 @@ export default {
     }
   },
   methods: {
-    //sendStuff() {
-    //  this.$store.dispatch('updateHowdy', 'purple');
-    //}
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName];
       if (field) return { 'md-invalid':  field.$invalid && field.$dirty };

@@ -1,7 +1,8 @@
 <template>
   <v-layout class="login-module"
-          align-center
-          justify-center>
+    align-center
+    justify-center>
+
     <v-flex
       xs12
       sm8
@@ -30,9 +31,9 @@
               prepend-icon="lock"
               :type="visible ? 'text' : 'password'"
               :append-icon="visible ? 'visibility_off' : 'visibility'"
-               @click:append="() => (visible = !visible)"
-
+              @click:append="() => (visible = !visible)"
             ></v-text-field>
+
           </v-form>
           <v-card-actions>
             <v-btn class="cta-button cta-button--primary" type="submit" large block tile>Login</v-btn>
@@ -49,8 +50,8 @@
 
 <script>
 export default {
-    data: () => ({
-      visible: false
-    })
+  data: () => ({
+    visible: false
+  })
 }
 </script>

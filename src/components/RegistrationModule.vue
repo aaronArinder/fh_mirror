@@ -1,12 +1,13 @@
 <template>
   <v-container class="registration-module">
     <v-layout
-            align-center
-            justify-center>
+      align-center
+      justify-center>
+
       <v-flex
         xs12
         sm8
-        md7 >
+        md7>
         <v-card class="elevation-12" tile>
           <v-toolbar
             flat
@@ -14,56 +15,43 @@
             <v-toolbar-title>Sign Up</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-           <v-form class="registration-module__form">
-        <div v-for="(question, index) in mockQuestions.questions" :key="`question${index}`">
-          <v-text-field
-            :label="question.question"
-            required
-            v-if="question.type !== 'select'" :type="question.type" :name="question.question" :id="question.question_id" autocomplete="given-name" :disabled="sending"
-            >
-          </v-text-field>
-          <v-select
-          v-if="question.type == 'select'"
-          :items="question.options"
-          :label="question.question"
-          :disabled="sending"
-          :id="question.question_id"
-          required
-          ></v-select>
-        </div>
+            <v-form class="registration-module__form">
+              <div v-for="(question, index) in mockQuestions.questions" :key="`question${index}`">
+                <v-text-field
+                  required
+                  autocomplete="given-name"
+                  :label="question.question"
+                  v-if="question.type !== 'select'"
+                  :type="question.type"
+                  :name="question.question"
+                  :id="question.question_id"
+                  :disabled="sending"
+                >
+                </v-text-field>
+                <v-select
+                  required
+                  v-if="question.type == 'select'"
+                  :items="question.options"
+                  :label="question.question"
+                  :disabled="sending"
+                  :id="question.question_id"
+                ></v-select>
+              </div>
+
               <v-card-actions>
-            <v-btn class="cta-button cta-button--primary" type="submit" large block tile>Register</v-btn>
-          </v-card-actions>
-      </v-form>
+              <v-btn
+                large
+                block
+                tile
+                class="cta-button cta-button--primary"
+                type="submit"
+              >Register</v-btn>
+              </v-card-actions>
+            </v-form>
           </v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
-
-    <!-- <div class="registration-module__content">
-      <h1 v-html="mockQuestions.title" class="registration-module__title display-1 font-weight-light"></h1>
-      <v-form class="registration-module__form">
-        <div v-for="(question, index) in mockQuestions.questions" :key="`question${index}`">
-          <v-text-field
-            :label="question.question"
-            required
-            v-if="question.type !== 'select'" :type="question.type" :name="question.question" :id="question.question_id" autocomplete="given-name" :disabled="sending"
-            >
-          </v-text-field>
-          <v-select
-          v-if="question.type == 'select'"
-          :items="question.options"
-          :label="question.question"
-          :disabled="sending"
-          :id="question.question_id"
-          required
-          ></v-select>
-        </div>
-        <div class="registration-module__btn-container">
-          <v-btn class="cta-button cta-button--primary" large type="submit" block tile :disabled="sending">Register</v-btn>
-        </div>
-      </v-form>
-    </div> -->
   </v-container>
 </template>
 
@@ -117,9 +105,6 @@ export default {
     }
   },
   methods: {
-    //sendStuff() {
-    //  this.$store.dispatch('updateHowdy', 'purple');
-    //}
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName];
       if (field) return { 'md-invalid':  field.$invalid && field.$dirty };
