@@ -1,5 +1,6 @@
 env.js
 *.idea.*
+**/cookies*
 .DS_Store
 node_modules
 /dist
