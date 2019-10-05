@@ -1,0 +1,22 @@
+ @mixin mq ($breakpoint) {
+  @media only screen and (min-width:$breakpoint) {
+    @content;
+  }
+}
+
+@mixin portrait () {
+  @media only screen and (orientation: portrait) {
+    @content;
+  }
+}
+@mixin landscape () {
+  @media only screen and (orientation: landscape) {
+    @content;
+  }
+}
+
+$bp-xsmall: pxToEm(460);
+$bp-small: pxToEm(600);
+$bp-medium: pxToEm(720);
+$bp-large: pxToEm(1024);
+$bp-xlarge: pxToEm(1250);

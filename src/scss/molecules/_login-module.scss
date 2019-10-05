@@ -1,0 +1,72 @@
+.login-module {
+  .v-toolbar {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: 0;
+      height: 1px;
+      width: 100%;
+      background: $teal-gradient;
+    }
+    &__title {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  .theme--light.v-card {
+    background-color: initial;
+  }
+  .theme--dark.v-sheet {
+    background-color: rgba($primary-grey, .5);
+  }
+  &__card {
+    background: rgba(0, 0, 0, 0.15);
+    .v-card__text {
+      padding-bottom: .5rem;
+    }
+    .v-input__prepend-outer {
+      margin: 0;
+      background: #f5f6f8;
+      padding: .75rem;
+      .v-icon {
+        color: $grey-10;
+      }
+    }
+    .v-input__slot {
+      background-color: $white;
+      padding: .5rem;
+      margin-bottom: 0;
+      .v-label {
+        padding-left: .5rem;
+        color: rgba(0, 0, 0, 0.25);
+        &--active {
+          transform: translateY(-15px)scale(.75);
+        }
+      }
+      &:hover:after {
+        border-style: none;
+      }
+    }
+    .v-card__actions {
+      padding: 1rem 0;
+      display: flex;
+      justify-content: space-around;
+      .cta-button--primary {
+        margin-right: 16px;
+        margin-left: 16px;
+      }
+      .cta-button--tertiary {
+        padding-left: 0;
+      }
+      .cta-button--secondary {
+        min-width: 100px;
+      }
+      .v-btn.v-btn + .v-btn {
+        background-color: rgba($primary-grey, .5);
+      }
+    }
+  }
+
+}

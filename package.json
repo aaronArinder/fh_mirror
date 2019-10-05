@@ -35,6 +35,7 @@
     "vue": "^2.6.10",
     "vue-loader": "^15.7.1",
     "vue-material": "^1.0.0-beta-11",
+    "vue-mq": "^1.0.1",
     "vue-router": "^3.1.3",
     "vue-style-loader": "~4.1",
     "vue-template-compiler": "^2.6.10",
@@ -50,9 +51,10 @@
     "webpack-merge": "~4.2"
   },
   "devDependencies": {
-    "sass": "^1.22.12",
+    "@mdi/font": "^4.4.95",
     "deepmerge": "^4.0.0",
     "fibers": "^4.0.1",
+    "sass": "^1.22.12",
     "sass-loader": "^7.1.0"
   }
 }

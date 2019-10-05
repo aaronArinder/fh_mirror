@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import Questionnaire from './components/Questionnaire.vue'
+import Login from './views/Login.vue'
+import Register from './views/Register.vue'
 
 Vue.use(Router)
 
@@ -13,10 +14,15 @@ export default new Router({
       component: Home
     },
     {
-      path: '/questionnaire',
-      name: 'questionnaire',
-      component: Questionnaire
-    }
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
+    },
     //{
     //  path: '/about',
     //  name: 'about',

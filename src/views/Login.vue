@@ -1,17 +1,17 @@
 <template>
   <v-container fluid ma-0 pa-0 fill-height>
-    <QuestionnaireModule />
+    <LoginModule />
   </v-container>
 </template>
 
 <script>
 // @ is an alias to /src
-import QuestionnaireModule from '@/components/QuestionnaireModule.vue'
+import LoginModule from '@/components/LoginModule.vue'
 
 export default {
-  name: 'home',
+  name: 'login',
   components: {
-    QuestionnaireModule
+   LoginModule
   }
 }
 </script>
