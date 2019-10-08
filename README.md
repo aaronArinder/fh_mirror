@@ -9,8 +9,8 @@ It's very much a work in progress, and there's a bit of dust on the ground. I've
 
 
 ### <a name="ToC"></a>Table of Contents
-1. [MVP Checklist](#)
-2. [Immediate post-MVP](#)
+1. [MVP Checklist](#mvp)
+2. [Immediate post-MVP](#post-mvp)
 3. [Long-term goals](#long-term-goals)
 4. [App config](#config)
 5. [Running the app](#running-app)
