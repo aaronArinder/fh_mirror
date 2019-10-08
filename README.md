@@ -1,11 +1,11 @@
 ### Overview
 This is a mirror of an application my wife (a front-end developer), and I are working on for my dad. He works as a marriage counselor, and we're (slowly) building him a CRUD app. Eventually, we (or whoever takes it on) will expand it to for homework, assessments, and online classes.
 
-The technology used is Node, Vue, and Webpack. It's very much a work in progress, and there's a bit of dust on the ground. I've made a mirror of it for applying to jobs; I figure a real-world application (or at least the beginning of one) is useful to see. So far, we have the scaffolding in place for bundling and statically serving the app, as well as backend logic and frontend views for registration and login. We haven't connected the backend and frontend for registration and login, but will do so shortly. Hopefully you're not reading this before that part is connected. If you are, there's a markdown file in `/app/server` called `auth-notes.md` with notes on how to hit the registration and login routes with curl.
+The technology used is Node, Vue, and Webpack. So far, we have the scaffolding in place for bundling and statically serving the app, as well as backend logic and frontend views for registration and login. We haven't connected the backend and frontend for registration and login, but will do so shortly. Hopefully you're not reading this before that part is connected. If you are, there's a markdown file in `/app/server` called `auth-notes.md` with notes on how to hit the registration and login routes with curl.
 
 To play with the app, see the sections (4) and (5) below: configuring and running the app.
 
-Finally, the project planning is done in the actual (private) repo. You'll see some issue numbers floating around in the commits. Let me know if you have any questions about how I'm  organizing the work. If you're here, you likely already have my email address.
+It's very much a work in progress, and there's a bit of dust on the ground. I've made a mirror of it for applying to jobs; I figure a real-world application (or at least the beginning of one) is useful to see. If you find any bugs, open an issue! This is a mirror, but I'll transfer it to the actual (private) repo where I organize the work for this app.
 
 
 ### <a name="ToC"></a>Table of Contents
@@ -108,6 +108,11 @@ This sets the environment to `development`. Eventually, it (and `prod.env.js`) w
 
 
 ### <a name="running-app"></a> Running the app
+- First, run `nvm use`. That'll get you on the same version of Node I'm currently running (yes, yes, I'll update it soon).
+- Get the dependencies: from `app/`, run `npm install && cd server && npm install && cd ..`.
+- To run the app, you'll need a database. Open `psql` or `pgcli` or however you do these things, and run `create database <insert_db_name_here>`. You might as well go with `family_hope` as your db name. Make sure whatever your db name is, you put it in `common.env.js` along with your postgres username, host, and password. See the `config` section above.
+- Once you've a database, from the `app/` directory (or wherever, so long as you get the path right), open pgcli, psql, or whatever, and run`\i server/database-scripts/create-tables.sql`. Once done, type `commit` and hit enter. You now have tables!
+
 #### Client-only
 To use the webpack-dev-server, run `npm run develop`. This is useful when working on frontend views, but otherwise isn't terribly useful; in general, it's better to run the server and statically serve the bundled files to get closer to how the app will actually be served.
 
