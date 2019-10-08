@@ -66,14 +66,6 @@ const webpackConfig = {
               indentedSyntax: true
             }
           }
-          //isDev ? 'vue-style-loader' : MiniCSSExtractPlugin.loader,
-          //{ loader: 'css-loader', options: { sourceMap: isDev } },
-          //{ loader: 'sass-loader',
-          //  options: {
-          //    sourceMap: isDev,
-          //    fiber: require('fibers'),
-          //  }
-          //}
         ]
       }
     ]
@@ -83,7 +75,6 @@ const webpackConfig = {
     new VuetifyLoaderPlugin(),
     new HtmlPlugin({ template: 'index.html', chunksSortMode: 'dependency' }),
     new MiniCSSExtractPlugin({ filename: `styles/[name].css` }),
-
   ]
 };
 
