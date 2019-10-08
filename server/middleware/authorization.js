@@ -74,7 +74,7 @@ function jwtStrategyCallback (jwt, done) {
 }
 
 // used when a jwt is passed over with cookies
-passport.use(new JWTStrategy(jwtStrategy, jetStrategyCallback));
+passport.use(new JWTStrategy(jwtStrategy, jwtStrategyCallback));
 
 /**
  * @todo Better error-handling
