@@ -18,6 +18,7 @@ create table if not exists profiles (
   updated date not null default now()
 );
 
+-- USERS
 create table if not exists users (
   id serial primary key,
   first_name text not null,
@@ -26,14 +27,28 @@ create table if not exists users (
   sex text not null,
   addresses jsonb,
   phones jsonb,
+  password_hash varchar,
   created date not null default now(),
-  updated date not null default now(),
-  password_hash varchar
+  updated date not null default now()
 );
 
 -- QUESTIONS
 create table if not exists questions (
   id serial primary key,
+  name text not null,
+  body text not null,
+  type text not null,
+  autocomplete text,
+  required boolean default false,
+  created date not null default now(),
+  updated date not null default now(),
+);
+
+-- FORMS
+create table if not exists forms (
+  id serial primary key,
+  name text not null,
+  questions integer[] not null,
   created date not null default now(),
   updated date not null default now()
 );
