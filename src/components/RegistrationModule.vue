@@ -15,16 +15,24 @@
             <v-toolbar-title>Sign Up</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-form class="registration-module__form">
-              <div v-for="(question, index) in mockQuestions.questions" :key="`question${index}`">
+            <!-- return false; to prevent query params being added. Surely there's a better
+              way to do this, but this is a nice stopgap for keeping passwords, etc., _out_
+              of the url
+
+              Talked to Frank about this; apparently we can use a callback with @click to
+              avoid it?
+            -->
+            <v-form class="registration-module__form" onsubmit="return false;">
+              <div v-for="(question, index) in this.newUserRegistration" :key="`question${index}`">
                 <v-text-field
                   required
-                  autocomplete="given-name"
-                  :label="question.question"
+                  autocomplete="question.auto-complete"
+                  v-model="question.model"
                   v-if="question.type !== 'select'"
+                  :label="question.body"
                   :type="question.type"
-                  :name="question.question"
-                  :id="question.question_id"
+                  :name="question.name"
+                  :id="question.id"
                   :disabled="sending"
                 >
                 </v-text-field>
@@ -32,20 +40,21 @@
                   required
                   v-if="question.type == 'select'"
                   :items="question.options"
-                  :label="question.question"
+                  :label="question.body"
                   :disabled="sending"
-                  :id="question.question_id"
+                  :id="question.id"
                 ></v-select>
               </div>
 
               <v-card-actions>
-              <v-btn
-                large
-                block
-                tile
-                class="cta-button cta-button--primary"
-                type="submit"
-              >Register</v-btn>
+                <v-btn
+                  large
+                  block
+                  tile
+                  @click="postNewUserRegistration"
+                  class="cta-button cta-button--primary"
+                  type="submit"
+                >Register</v-btn>
               </v-card-actions>
             </v-form>
           </v-card-text>
@@ -68,19 +77,14 @@ import {
 export default {
   name: 'RegistrationModule',
   mixins: [validationMixin],
-  data: () => ({
-    form: {
-      firstName: null,
-      lastName: null,
-      gender: null,
-      age: null,
-      email: null,
+  created () {
+    this.$store.dispatch({type: 'getNewRegForm'});
+  },
+  computed: {
+    newUserRegistration () {
+      return this.$store.state.forms.newUserRegistration;
     },
-    userSaved: false,
-    sending: false,
-    lastUser: null,
-    mockQuestions: mockQuestions
-  }),
+  },
   validations: {
     form: {
       firstName: {
@@ -105,37 +109,31 @@ export default {
     }
   },
   methods: {
-    getValidationClass (fieldName) {
-      const field = this.$v.form[fieldName];
-      if (field) return { 'md-invalid':  field.$invalid && field.$dirty };
-    },
 
-    clearForm () {
-      this.$v.$reset()
-      this.form.firstName = null
-      this.form.lastName = null
-      this.form.age = null
-      this.form.gender = null
-      this.form.email = null
-    },
+    postNewUserRegistration () {
+      const dispatchParams = {
+        type: 'axiosPOST',
+        url: '/register',
+        payload: this.newUserRegistration
+      };
 
-    saveUser () {
-      this.sending = true
-      // dummy example: call api/store/whatever
-      window.setTimeout(() => {
-        this.lastUser = `${this.form.firstName} ${this.form.lastName}`
-        this.userSaved = true
-        this.sending = false
-        this.clearForm()
-      }, 1500)
-    },
-
-    validateUser () {
-      this.$v.$touch()
-      if (!this.$v.$invalid) {
-        this.saveUser()
-      }
+      this.$store.dispatch(dispatchParams);
     }
+
+    // TODO: bring back validation
+
+    //getValidationClass (fieldName) {
+    //  const field = this.$v.form[fieldName];
+    //  if (field) return { 'md-invalid':  field.$invalid && field.$dirty };
+    //},
+
+    //validateUser () {
+    //  this.$v.$touch()
+    //  if (!this.$v.$invalid) {
+    //    this.saveUser()
+    //  }
+    //}
+
   },
 }
 </script>

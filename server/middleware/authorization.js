@@ -80,18 +80,26 @@ passport.use(new JWTStrategy(jwtStrategy, jwtStrategyCallback));
  * @todo Better error-handling
  */
 async function registrationHandler (req, res, next) {
+  const payload = req.body.payload;
+  const userData = payload.reduce((userObj, { name, model }) => {
+    userObj[name] = model;
+    return userObj;
+  }, {});
+
   const {
     first_name,
     last_name,
     dob,
     sex,
     username,
-    password
-  } = req.body;
+    new_password
+  } = userData;
+
   const hashCost = 10; // approx 13 seconds
 
   try {
-    const passwordHash = await bcrypt.hash(password, hashCost);
+    const passwordHash = await bcrypt.hash(new_password, hashCost);
+
     const insertUser = `
       insert into users (first_name, last_name, dob, sex, username, password_hash)
       values ($1, $2, $3, $4, $5, $6)
