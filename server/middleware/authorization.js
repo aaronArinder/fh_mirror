@@ -3,7 +3,7 @@
 const { _query }      = require('../modules/db');
 const bcrypt          = require('bcrypt');
 const express         = require('express');
-const { getPassword } = require('../ORM/users');
+const { getPassword } = require('../users');
 const jwt             = require('jsonwebtoken');
 const LocalStrategy   = require('passport-local').Strategy;
 const passport        = require('passport');

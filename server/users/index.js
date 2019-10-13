@@ -1,3 +1,5 @@
+'use strict';
+
 const { _query } = require('../modules/db');
 
 // TODO: should use stored procedures
