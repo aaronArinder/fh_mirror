@@ -15,6 +15,8 @@ const path         = require('path');
 const serveStatic  = require('serve-static');
 
 const { authorizationHook } = require('./middleware/authorization');
+const { formHook }          = require('./forms/crud');
+const { paramsHook }        = require('./params');
 
 const app = express();
 
@@ -69,6 +71,16 @@ app.use(cookieParser());
 app.use(serveStatic('../dist', { index: 'index.html' }))
 
 /**
+ * Params handling
+ *
+ * @typedef Invocation
+ * @name paramsHook
+ * @arg app {Object} The express instance
+ *
+ */
+paramsHook(app);
+
+/**
  * The authorizationHook() fn hooks our registration, login, and authentication logic into the
  * app.
  *
@@ -77,6 +89,14 @@ app.use(serveStatic('../dist', { index: 'index.html' }))
  * @arg app {Object} The express instance
  */
 authorizationHook(app);
+
+/**
+ * The formHook() fn hooks in a GET handler for forms
+ * @typedef Invocation
+ * @name formHook
+ * @arg app {Object} The express instance
+ */
+formHook(app);
 
 /* let 'er rip, grill */
 app.listen(process.env.PORT);
