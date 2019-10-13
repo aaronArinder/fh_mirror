@@ -1,4 +1,6 @@
-/* eslint-disable no-console */
+/*
+ * not currently used; boilerplate from vue setup. We'll eventually have a PWA
+ * */
 
 import { register } from 'register-service-worker'
 
