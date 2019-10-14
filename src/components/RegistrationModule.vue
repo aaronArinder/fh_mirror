@@ -23,7 +23,7 @@
               avoid it?
             -->
             <v-form class="registration-module__form" onsubmit="return false;">
-              <div v-for="(question, index) in this.newUserRegistration" :key="`question${index}`">
+              <div v-for="(question, index) in formdata" :key="`question${index}`">
                 <v-text-field
                   required
                   autocomplete="question.auto-complete"
@@ -65,74 +65,24 @@
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-import mockQuestions from '../mock-data/registration'
-import {
-  required,
-  email,
-  minLength,
-  maxLength,
-} from 'vuelidate/lib/validators'
 
 export default {
   name: 'RegistrationModule',
-  mixins: [validationMixin],
-  created () {
-    this.$store.dispatch({type: 'getNewRegForm'});
+  props: {
+    formdata: Array
   },
-  computed: {
-    newUserRegistration () {
-      return this.$store.state.forms.newUserRegistration;
-    },
-  },
-  validations: {
-    form: {
-      firstName: {
-        required,
-        minLength: minLength(3),
-      },
-      lastName: {
-        required,
-        minLength: minLength(3),
-      },
-      age: {
-        required,
-        maxLength: maxLength(3),
-      },
-      gender: {
-        required,
-      },
-      email: {
-        required,
-        email,
-      }
-    }
-  },
+  mounted(){ console.log('newUserForm', this.newUserForm)},
   methods: {
-
     postNewUserRegistration () {
       const dispatchParams = {
-        type: 'axiosPOST',
+        type: 'registerNewUser',
         url: '/register',
-        payload: this.newUserRegistration
+        //TODO: make local data?
+        payload: this.newUserForm
       };
 
       this.$store.dispatch(dispatchParams);
     }
-
-    // TODO: bring back validation
-
-    //getValidationClass (fieldName) {
-    //  const field = this.$v.form[fieldName];
-    //  if (field) return { 'md-invalid':  field.$invalid && field.$dirty };
-    //},
-
-    //validateUser () {
-    //  this.$v.$touch()
-    //  if (!this.$v.$invalid) {
-    //    this.saveUser()
-    //  }
-    //}
 
   },
 }

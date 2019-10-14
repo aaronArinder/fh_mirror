@@ -1,25 +1,25 @@
 <template>
   <v-container class="questionnaire-module">
     <div class="questionnaire-module__content">
-      <h1 v-html="mockQuestions.title" class="questionnaire-module__title font-weight-light"></h1>
+      <h1 v-html="title" class="questionnaire-module__title font-weight-light"></h1>
       <v-form class="questionnaire-module__form">
-        <div v-for="(question, index) in mockQuestions.questions" :key="`question${index}`">
+        <div v-for="(question, index) in formdata" :key="`question${index}`">
           <v-text-field
             required
-            :label="question.question"
+            :label="question.body"
             v-if="question.type !== 'select'"
             :type="question.type"
-            :name="question.question"
-            :id="question.question_id"
+            :name="question.name"
+            :id="question.id"
             :disabled="sending"
           >
           </v-text-field>
           <v-select
             v-if="question.type == 'select'"
             :items="question.options"
-            :label="question.question"
+            :label="question.body"
             :disabled="sending"
-            :id="question.question_id"
+            :id="question.id"
           ></v-select>
         </div>
         <div class="questionnaire-module__btn-container">
@@ -38,86 +38,15 @@
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-import mockQuestions from '../mock-data/new-user'
-import {
-  required,
-  email,
-  minLength,
-  maxLength,
-} from 'vuelidate/lib/validators'
-
 export default {
   name: 'QuestionnaireModule',
-  mixins: [validationMixin],
-  data: () => ({
-    form: {
-      firstName: null,
-      lastName: null,
-      gender: null,
-      age: null,
-      email: null,
+  mounted(){ console.log('this', this)},
+  props: {
+    title: String,
+    formdata: {
+      type: Array,
+      required: true,
     },
-    userSaved: false,
-    sending: false,
-    lastUser: null,
-    mockQuestions: mockQuestions
-  }),
-  validations: {
-    form: {
-      firstName: {
-        required,
-        minLength: minLength(3),
-      },
-      lastName: {
-        required,
-        minLength: minLength(3),
-      },
-      age: {
-        required,
-        maxLength: maxLength(3),
-      },
-      gender: {
-        required,
-      },
-      email: {
-        required,
-        email,
-      }
-    }
-  },
-  methods: {
-    getValidationClass (fieldName) {
-      const field = this.$v.form[fieldName];
-      if (field) return { 'md-invalid':  field.$invalid && field.$dirty };
-    },
-
-    clearForm () {
-      this.$v.$reset()
-      this.form.firstName = null
-      this.form.lastName = null
-      this.form.age = null
-      this.form.gender = null
-      this.form.email = null
-    },
-
-    saveUser () {
-      this.sending = true
-      // dummy example: call api/store/whatever
-      window.setTimeout(() => {
-        this.lastUser = `${this.form.firstName} ${this.form.lastName}`
-        this.userSaved = true
-        this.sending = false
-        this.clearForm()
-      }, 1500)
-    },
-
-    validateUser () {
-      this.$v.$touch()
-      if (!this.$v.$invalid) {
-        this.saveUser()
-      }
-    }
   },
 }
 </script>
