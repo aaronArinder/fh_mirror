@@ -1,27 +1,38 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
-import Login from './views/Login.vue'
-import Register from './views/Register.vue'
 
 Vue.use(Router)
+
+function lazyLoad (view) {
+  return () => import(`@/views/${view}.vue`)
+}
 
 export default new Router({
   routes: [
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: lazyLoad('Login')
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: lazyLoad('About')
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: lazyLoad('Login')
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: lazyLoad('Profile')
     },
     {
       path: '/register',
       name: 'register',
-      component: Register
+      component: lazyLoad('Register')
     },
     //{
     //  path: '/about',
