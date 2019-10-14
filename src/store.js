@@ -89,6 +89,7 @@ export default new Vuex.Store({
      *   and password.
      *
      * @todo base64 encode `payload`'s values that could have funny chars.
+     * @todo Abstract the common axios parts to axiosHandler() or something else
      */
     async registerNewUser (state, { payload }) {
       try {
@@ -112,6 +113,8 @@ export default new Vuex.Store({
      *
      * @param {Object} state Represents internal state.
      * @param {String} formName Name of the desired form: MUST match associated mat view's name.
+     *
+     * @todo Abstract the common axios parts to axiosHandler() or something else
      */
     async getForm (state, { payload: { formName } }) {
       try {
