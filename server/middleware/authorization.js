@@ -17,15 +17,6 @@ const JWTStrategy     = passportJWT.Strategy;
  */
 const router = express.Router();
 
-router.post('/register', registrationHandler);
-router.post('/login', loginHandler);
-router.get('/test-auth', passport.authenticate('jwt', { session: false }), testAuth);
-
-module.exports = {
-  authorizationHook: (api) => {
-    api.use(router);
-  }
-}
 
 
 /**
@@ -124,12 +115,13 @@ async function registrationHandler (req, res, next) {
 /**
  * @todo Better error-handling
  */
-function loginHandler (req, res) {
+function loginHandler (req, res, next) {
   passport.authenticate(
     'local',
     { session: false },
     (err, user) => {
-      if (err || !user) return res.sendStatus(400);
+      console.log('user', user)
+      if (err || !user) return res.sendStatus(401);
       const payload = {
         username: req.body.username,
         expires: Date.now() + parseInt(process.env.JWT_EXPIRATION_MS),
@@ -142,7 +134,7 @@ function loginHandler (req, res) {
         return res.sendStatus(200);
       })
     },
-  )(req, res);
+  )(req, res, next);
 }
 
 function testAuth (req, res) {
@@ -150,3 +142,23 @@ function testAuth (req, res) {
   return res.sendStatus(200);
 }
 
+
+module.exports = {
+  authorizationHook: (api) => {
+    api.use(passport.initialize());
+    // sort of crazy lookup fn:
+    // passport-local: lib/utils.js
+    // https://github.com/jaredhanson/passport-local/blob/master/lib/utils.js
+    passport.use(new LocalStrategy({
+      usernameField: 'payload[]username',
+      passwordField: 'payload[]password',
+    }, localStrategy));
+    passport.use(new JWTStrategy(jwtStrategy, jwtStrategyCallback));
+
+    router.post('/register', registrationHandler);
+    router.post('/login', loginHandler);
+    router.get('/test-auth', passport.authenticate('jwt', { session: false }), testAuth);
+
+    api.use(router);
+  }
+}
