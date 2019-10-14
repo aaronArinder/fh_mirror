@@ -13,18 +13,9 @@ const { secret }      = process.env.secret;
 const JWTStrategy     = passportJWT.Strategy;
 
 /**
- * @todo Give reasons for why Router is being used rather than just putting it on app/api
+ * @todo Comment why Router is being used rather than just putting it on app/api
  */
 const router = express.Router();
-
-
-
-/**
- * @todo Figure out a better way to list the strategies before the functions that they use. Only a problem for the const down there.
- */
-
-// this method is used when a password/username is sent over on req.body
-passport.use(new LocalStrategy(localStrategy));
 
 /**
  *
@@ -63,9 +54,6 @@ function jwtStrategyCallback (jwt, done) {
   if (Date.now() > jwt.expires) return done('jwt expired');
   else return done(null, jwt);
 }
-
-// used when a jwt is passed over with cookies
-passport.use(new JWTStrategy(jwtStrategy, jwtStrategyCallback));
 
 /**
  * @todo Better error-handling
@@ -120,7 +108,6 @@ function loginHandler (req, res, next) {
     'local',
     { session: false },
     (err, user) => {
-      console.log('user', user)
       if (err || !user) return res.sendStatus(401);
       const payload = {
         username: req.body.username,
@@ -146,8 +133,9 @@ function testAuth (req, res) {
 module.exports = {
   authorizationHook: (api) => {
     api.use(passport.initialize());
+
     // sort of crazy lookup fn:
-    // passport-local: lib/utils.js
+    // passport-local: lib/utils.js -- only util fn in file
     // https://github.com/jaredhanson/passport-local/blob/master/lib/utils.js
     passport.use(new LocalStrategy({
       usernameField: 'payload[]username',
