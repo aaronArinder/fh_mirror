@@ -16,21 +16,42 @@ It's very much a work in progress, and there's a bit of dust on the ground. I've
 5. [Running the app](#running-app)
 
 ### <a name="mvp"></a> MVP checklist
-- [ ] Registration, login
-  - [x] Back-end logic
-  - [x] Front-end view
-  - [ ] Front-end hooked to back-end
-- [x] Deployable via Docker to AWS
-- [x] Serve statically generated bundle
-- [x] Vue impl
-  - [ ] Form validation
-  - [x] Design system
+- Build/deployment
+  - [x] Deployable via Docker to AWS
+  - [x] Serve statically generated bundle
   - [x] Webpack bundled
     - [x] Dynamic bundles based on env
-- [ ] Basic reporting
-  - [ ] Current users and case status
-- [ ] Comment backend
-- [ ] effing eslintrc in place
+- General
+  - Frontend
+    - [x] Comment store actions
+    - [x] Vue impl
+      - [ ] Form validation library
+        - [x] Hooked in
+        - [ ] All forms validated
+      - [x] Design system
+  - Backend
+    - [ ] Comment auth middleware/routes
+  - [ ] Tests!
+    - [ ] Pick/setup assertion library/runner
+      - [ ] FE
+      - [ ] BE
+    - [ ] Test coverage acceptable
+      - [ ] FE
+      - [ ] BE
+- Features
+  - [x] Registration
+    - [x] Back-end logic
+    - [x] Front-end view
+    - [x] Front-end hooked to back-end
+  - [x] Login
+    - [x] Back-end logic
+    - [x] Front-end view
+    - [x] Front-end hooked to back-end
+  - [x] Intake form
+  - [ ] Basic reporting
+    - [ ] Current users and case status
+- Housekeeping
+  - [ ] effing eslintrc in place
 
 ### <a name="post-mvp"></a> Immediate post-MVP ideas
 - [ ] PWA
