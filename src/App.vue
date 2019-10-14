@@ -6,9 +6,9 @@
           <v-toolbar-title class="white--text">Family Hope</v-toolbar-title>
           <div class="flex-grow-1"></div>
           <v-toolbar-items>
-            <v-btn class="white--text" to="/" text>Home</v-btn>
+            <v-btn v-if="loggedIn" class="white--text" to="/profile" text>Profile</v-btn>
             <v-btn class="white--text" to="/about" text>About</v-btn>
-            <v-btn class="white--text" to="/login" text>Login</v-btn>
+            <v-btn v-if="!loggedIn" class="white--text" to="/login" text>Login</v-btn>
           </v-toolbar-items>
         </v-toolbar>
       </div>
@@ -27,4 +27,16 @@
     </v-app>
   </div>
 </template>
+
+<script>
+
+export default {
+  computed: {
+    loggedIn () {
+      return this.$store.state.loggedIn;
+    },
+  },
+}
+
+</script>
 
