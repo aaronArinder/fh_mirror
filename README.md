@@ -1,26 +1,22 @@
-### Overview
-This is a mirror of an application my wife (a front-end developer), and I are working on for my dad. He works as a marriage counselor, and we're (slowly) building him a CRUD app. Eventually, we (or whoever takes it on) will expand it to for homework, assessments, and online classes.
-
-The technology used is Node, Vue, and Webpack. So far, we have the scaffolding in place for bundling and statically serving the app, as well as backend logic and frontend views for registration and login. We haven't connected the backend and frontend for registration and login, but will do so shortly. Hopefully you're not reading this before that part is connected. If you are, there's a markdown file in `/app/server` called `auth-notes.md` with notes on how to hit the registration and login routes with curl.
-
-To play with the app, see the sections (4) and (5) below: configuring and running the app.
-
-It's very much a work in progress, and there's a bit of dust on the ground. I've made a mirror of it for applying to jobs; I figure a real-world application (or at least the beginning of one) is useful to see. If you find any bugs, open an issue! This is a mirror, but I'll transfer it to the actual (private) repo where I organize the work for this app.
-
-
 ### <a name="ToC"></a>Table of Contents
-1. [MVP Checklist](#mvp)
-2. [Immediate post-MVP](#post-mvp)
-3. [Long-term goals](#long-term-goals)
-4. [App config](#config)
-5. [Running the app](#running-app)
+1. [Overview](#overview)
+2. [MVP Checklist](#mvp)
+3. [Immediate post-MVP](#post-mvp)
+4. [Long-term goals](#long-term-goals)
+5. [App config](#config)
+6. [Running the app](#running-app)
+
+### <a name="overview"></a>Overview
+#### Purpose
+This is a mirror of an application my wife (a front-end developer), brother (someone hoping to get into web development), and I are working on for my dad. So far, I've been the principal developer. My hope is to get them more involved as their schedules free up. So, this README is as much for them as it is to anyone who found themselves here from a link on my resume.
+
+My dad is a marriage counselor who handles a lot of court-appointed counseling, and this app is a CRUD app with two purposes: to ease the pain of onboarding new clients and to report on those clients to the court system. After MVP, whoever takes this app on will likely expand it to handle homework, online classes, and so on.
+
+#### Design decisions
+One goal for the app is to be dynamic as possible. So, the forms folks fill out are from questions in the database collected into materialized views. A request is made to the backend for each form, and then iterated over in the relevant frontend component (`QuestionnaireModule` for general forms and the `RegistrationModule` for registering new users). One practical benefit is that forms can be updated without re-deploying the app: just make the change in the database. Apart from this, it's a fairly standard CRUD app.
+
 
 ### <a name="mvp"></a> MVP checklist
-- Build/deployment
-  - [x] Deployable via Docker to AWS
-  - [x] Serve statically generated bundle
-  - [x] Webpack bundled
-    - [x] Dynamic bundles based on env
 - General
   - Frontend
     - [x] Comment store actions
@@ -31,7 +27,8 @@ It's very much a work in progress, and there's a bit of dust on the ground. I've
       - [x] Design system
   - Backend
     - [ ] Comment auth middleware/routes
-  - [ ] Tests!
+    - [ ] Using Cluster (or pm2)
+  - Tests
     - [ ] Pick/setup assertion library/runner
       - [ ] FE
       - [ ] BE
@@ -50,22 +47,29 @@ It's very much a work in progress, and there's a bit of dust on the ground. I've
   - [x] Intake form
   - [ ] Basic reporting
     - [ ] Current users and case status
+- Build/deployment
+  - [x] Deployable via Docker to AWS
+  - [x] Serve statically generated bundle
+  - [x] Webpack bundled
+    - [x] Dynamic bundles based on env
+  - [ ] Figure out a continuous integration pipeline
 - Housekeeping
   - [ ] effing eslintrc in place
+  - [ ] Get webpack-dev-server running on some other port, to let both the webpack-dev-server (for hot reloading) and the actual server (for real data) run at the same time
 
 ### <a name="post-mvp"></a> Immediate post-MVP ideas
 - [ ] PWA
-- [ ] Node Cluster (or pm2) for a multi-threaded server
-- [ ] Periodic assessments
-- [ ] OAuth2 for at least gmail
+- [ ] Periodic assessments (time-based forms; dynamic expiry)
+- [ ] OAuth2, WebAuthn, MFA?!
 
 ### <a name="long-term-goals"></a> Long-term goals
 - [ ] Online class homework
 - [ ] Online classes/tutorials
+- [ ] Obviously a marriage crypto coin
 
 
 ### <a name="config"></a>App config
-The bundling of the app is controlled via `app/config`. You'll find a webpack config in there modularized by environment. There is also a git-ignored directory, `config/env`. You'll need what's in it to run the app. I'll describe it below.
+The bundling of the app is controlled via `app/config`. In that directory, you'll find a webpack config modularized by environment. There is also a git-ignored directory, `config/env`. You'll need what's in it to run the app. I'll describe each in turn below.
 
 #### <a name="webpack"></a> Webpack
 The webpack config is fairly straightforward apart from being modularized. Start with the `common` config file and move to the `dev` config file. If you're not interested in the bundling aspects of the app, you can ignore these files altogether.
@@ -100,7 +104,7 @@ pe.PGPASSWORD = '';
 // postgres host: usually 0.0.0.0
 pe.PGHOST = '';
 
-// database name: call it family_hope or whatever you want
+// database name: if you run the script below, it'll be family_hope
 pe.PGDATABASE = '';
 
 // standard postgres port
@@ -130,16 +134,29 @@ This sets the environment to `development`. Eventually, it (and `prod.env.js`) w
 
 ### <a name="running-app"></a> Running the app
 - First, run `nvm use`. That'll get you on the same version of Node I'm currently running (yes, yes, I'll update it soon).
-- Get the dependencies: from `app/`, run `npm install && cd server && npm install && cd ..`.
-- To run the app, you'll need a database. Open `psql` or `pgcli` or however you do these things, and run `create database <insert_db_name_here>`. You might as well go with `family_hope` as your db name. Make sure whatever your db name is, you put it in `common.env.js` along with your postgres username, host, and password. See the `config` section above.
-- Once you've a database, from the `app/` directory (or wherever, so long as you get the path right), open pgcli, psql, or whatever, and run`\i server/database-scripts/create-tables.sql`. Once done, type `commit` and hit enter. You now have tables!
+- Get the dependencies: from within `app/`, run `npm install && cd server && npm install && cd ..`.
+- To run the app, you'll need a database.
+  - `cd server/database-scripts`
+  - Open `psql` or `pgcli` or whatever you prefer.
+  - Run `\i create-database.sql`
+    - Note: _it's crucial you run this from within app/server/database-scripts_. There are relative paths pointing to other sql scripts in the `database-scripts` directory.
+
 
 #### Client-only
-To use the webpack-dev-server, run `npm run develop`. This is useful when working on frontend views, but otherwise isn't terribly useful; in general, it's better to run the server and statically serve the bundled files to get closer to how the app will actually be served.
+To use the webpack-dev-server, run `npm run develop`. This is useful when working on frontend views, but since this app's forms come from the database, it isn't terribly useful. I'll eventually switch the webpack-dev-server port to one other than port 8080 (which is what I have the server using). That way, you can run both the webpack-dev-server (for hot reloads) and the actual server (for proper data).
 
 #### Server and bundled client
-To run the server and statically serve a bundled files, you first need to bundle the files!
+To bundle and then serve the bundled file, from within `app/server`, run:
+```
+npm run develop
+```
+To test bundling without serving, from within `app/`, run:
 
-- `npm run build-develop`
-- `cd server && npm start`
+```
+npm run bundle-develop
+```
+There's also a prod bundling script:
+```
+npm run bundle-production
+```
 
