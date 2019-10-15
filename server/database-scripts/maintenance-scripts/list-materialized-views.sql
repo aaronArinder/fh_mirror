@@ -1,11 +1,9 @@
--- select all materialized views
--- useful if you're resetting triggers, updating mat views, etc.
 
 select
-  schemaname
-  , matviewname
-  , matviewowner
-  , ispopulated
+  schemaname as schema_name
+  , matviewname as view_name
+  , matviewowner as owner
+  , ispopulated as is_populated
   , definition
 from pg_matviews
 order by schema_name, view_name;
