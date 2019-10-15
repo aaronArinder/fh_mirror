@@ -9,12 +9,15 @@
 
 require('../config/env/common.env'); // env vars
 
+/* external deps */
 const cookieParser = require('cookie-parser');
 const express      = require('express');
 const path         = require('path');
 const serveStatic  = require('serve-static');
 
-const { authorizationHook } = require('./middleware/authorization');
+/* route handlers */
+const { loginHook }         = require('./login');
+const { registrationHook }  = require('./registration');
 const { formHook }          = require('./forms/crud');
 const { paramsHook }        = require('./params');
 
@@ -56,8 +59,6 @@ app.use(express.json({
 
 app.use(cookieParser());
 
-//app.use('/', serveStatic(__dirname + '../dist'));
-
 /**
  * serve-static statically serves files.
  *
@@ -81,14 +82,26 @@ app.use(serveStatic('../dist', { index: 'index.html' }))
 paramsHook(app);
 
 /**
- * The authorizationHook() fn hooks our registration, login, and authentication logic into the
- * app.
+ * Login handling. This hook also has middleware for setting app up to use cookies and passwords.
  *
  * @typedef Invocation
- * @name authorizationHook
+ * @name loginHook
  * @arg app {Object} The express instance
+ *
+ * @todo abstract middleware out to own directory
  */
-authorizationHook(app);
+loginHook(app);
+
+/**
+ * Registration handling.
+ *
+ * @typedef Invocation
+ * @name loginHook
+ * @arg app {Object} The express instance
+ *
+ * @todo abstract middleware out to own directory
+ */
+registrationHook(app);
 
 /**
  * The formHook() fn hooks in a GET handler for forms

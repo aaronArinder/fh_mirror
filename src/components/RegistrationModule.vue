@@ -77,8 +77,7 @@ export default {
       const dispatchParams = {
         type: 'registerNewUser',
         url: '/register',
-        //TODO: make local data?
-        payload: this.newUserForm
+        payload: this.formdata
       };
 
       this.$store.dispatch(dispatchParams);
