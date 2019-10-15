@@ -153,6 +153,7 @@ Regardless of how you'll run it, there are some shared steps:
   - Open `psql` or `pgcli` or whatever you prefer.
   - Run `\i create-database.sql`
     - Note: _it's crucial you run this from within app/server/database-scripts_. There are relative paths pointing to other sql scripts in the `database-scripts` directory.
+  - Run `commit;` to accept the transaction, `abort;` to abort it.
 
 #### Node server and webpack-dev-server
 To use the webpack-dev-server, run `npm run develop`.
