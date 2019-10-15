@@ -34,7 +34,13 @@ const webpackConfig = merge(commonConfig, {
     hot: true,
     open: true,
     overlay: true,
-    port: 8080,
+    port: 8081,
+    proxy: {
+      '/': {
+        target: 'http://localhost:8080',
+        secure: false,
+      },
+    },
     stats: {
       normal: true
     }
